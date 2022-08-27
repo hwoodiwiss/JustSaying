@@ -25,7 +25,9 @@ public sealed class JustSayingBus : IMessagingBus, IMessagePublisher, IDisposabl
 
     private ConcurrentDictionary<string, SubscriptionGroupConfigBuilder> _subscriptionGroupSettings;
     private SubscriptionGroupSettingsBuilder _defaultSubscriptionGroupSettings;
+
     private readonly Dictionary<Type, IMessagePublisher> _publishersByType;
+    internal List<Type> RegisteredMessageTypes => _publishersByType.Keys.ToList();
 
     public IMessagingConfig Config { get; }
 
