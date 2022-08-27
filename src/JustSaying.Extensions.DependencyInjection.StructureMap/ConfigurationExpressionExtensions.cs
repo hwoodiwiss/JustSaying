@@ -141,5 +141,10 @@ public static class ConfigurationExpressionExtensions
                     var builder = context.GetInstance<MessagingBusBuilder>();
                     return builder.BuildSubscribers();
                 });
+
+        registry
+            .For(typeof(IMessagePublisher<>))
+            .Singleton()
+            .Use(typeof(TypedMessagePublisher<>));
     }
 }
