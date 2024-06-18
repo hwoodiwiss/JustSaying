@@ -1,0 +1,4 @@
+JustSaying.IServiceScope
+JustSaying.IServiceScope.ServiceResolver.get -> JustSaying.Fluent.IServiceResolver
+JustSaying.IServiceScopeFactory
+JustSaying.IServiceScopeFactory.CreateScope() -> JustSaying.IServiceScopeJustSaying.IServiceScope.ServiceResolver.get -> JustSaying.Fluent.IServiceResolverJustSaying.IServiceScopeJustSaying.IServiceScopeFactoryJustSaying.IServiceScopeFactoryJustSaying.IServiceScopeFactoryJustSaying.IServiceScopeFactory

@@ -119,9 +119,9 @@ public static class IServiceCollectionExtensions
         }
 
         // Register as self so the same singleton instance implements two different interfaces
-        services.TryAddSingleton((p) => new ServiceProviderResolver(p));
-        services.TryAddSingleton<IHandlerResolver>((p) => p.GetRequiredService<ServiceProviderResolver>());
-        services.TryAddSingleton<IServiceResolver>((p) => p.GetRequiredService<ServiceProviderResolver>());
+        services.TryAddSingleton((p) => new HandlerProviderResolver(p));
+        services.TryAddSingleton<IHandlerResolver>((p) => p.GetRequiredService<HandlerProviderResolver>());
+        services.TryAddSingleton<IServiceResolver>((p) => p.GetRequiredService<HandlerProviderResolver>());
 
         services.TryAddSingleton<IAwsClientFactory, DefaultAwsClientFactory>();
         services.TryAddSingleton<IAwsClientFactoryProxy>((p) => new AwsClientFactoryProxy(p.GetRequiredService<IAwsClientFactory>));
@@ -152,7 +152,7 @@ public static class IServiceCollectionExtensions
             (serviceProvider) =>
             {
                 var builder = new MessagingBusBuilder()
-                    .WithServiceResolver(new ServiceProviderResolver(serviceProvider));
+                    .WithServiceResolver(new HandlerProviderResolver(serviceProvider));
 
                 configure(builder, serviceProvider);
 

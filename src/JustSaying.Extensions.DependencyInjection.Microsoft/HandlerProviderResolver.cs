@@ -9,16 +9,16 @@ namespace JustSaying;
 /// A class that implements <see cref="IServiceResolver"/> and <see cref="IHandlerResolver"/>
 /// for <see cref="IServiceProvider"/>. This class cannot be inherited.
 /// </summary>
-internal sealed class ServiceProviderResolver : IServiceResolver, IHandlerResolver
+internal sealed class HandlerProviderResolver : IServiceResolver, IHandlerResolver, IHandlerScopeFactory
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ServiceProviderResolver"/> class.
+    /// Initializes a new instance of the <see cref="HandlerProviderResolver"/> class.
     /// </summary>
     /// <param name="serviceProvider">The <see cref="IServiceProvider"/> to use.</param>
-    internal ServiceProviderResolver(IServiceProvider serviceProvider)
+    internal HandlerProviderResolver(IServiceProvider serviceProvider)
     {
         ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        Logger = serviceProvider.GetRequiredService<ILogger<ServiceProviderResolver>>();
+        Logger = serviceProvider.GetRequiredService<ILogger<HandlerProviderResolver>>();
     }
 
     /// <summary>
@@ -81,4 +81,6 @@ internal sealed class ServiceProviderResolver : IServiceResolver, IHandlerResolv
     public T ResolveService<T>() where T : class => ServiceProvider.GetRequiredService<T>();
 
     public T ResolveOptionalService<T>() where T : class => ServiceProvider.GetService<T>();
+
+    public IHandlerScope CreateScope() => new HandlerProviderHandlerScope(ServiceProvider.CreateScope());
 }
